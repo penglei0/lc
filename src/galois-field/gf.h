@@ -18,19 +18,14 @@ enum class GfImplType : uint8_t {
   GF_POLY,
 };
 
-typedef uint8_t (*gf_mul_func)(uint8_t, uint8_t);
-typedef uint8_t (*gf_div_func)(uint8_t, uint8_t);
-typedef uint8_t (*gf_add_func)(uint8_t, uint8_t);
-typedef uint8_t (*gf_sub_func)(uint8_t, uint8_t);
-typedef uint8_t (*gf_inv_func)(uint8_t);
-
 class GaloisField {
  public:
-  gf_mul_func mul = nullptr;
-  gf_div_func div = nullptr;
-  gf_add_func add = nullptr;
-  gf_sub_func sub = nullptr;
-  gf_inv_func inv = nullptr;
+  uint8_t (*mul)(uint8_t, uint8_t) = nullptr;
+  uint8_t (*div)(uint8_t, uint8_t) = nullptr;
+  uint8_t (*add)(uint8_t, uint8_t) = nullptr;
+  uint8_t (*sub)(uint8_t, uint8_t) = nullptr;
+  uint8_t (*inv)(uint8_t) = nullptr;
+  GfImplType gf_type = GfImplType::GF_LUT;
 };
 
 bool InitGaloisField(GaloisField& gf, const GfImplType& type);

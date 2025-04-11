@@ -3,8 +3,10 @@ import argparse
 import logging
 import galois
 
+# GF is short for Galois Field
 
-def convert_to_cpp_array(arithmetic_table_file, output_cpp_file):
+
+def convert_to_cpp_array(arithmetic_table_file, output_cpp_file, degree):
     """convert arithmetic_table.txt into cpp code"""
     with open(arithmetic_table_file, 'r', encoding='utf-8') as file:
         lines = file.readlines()
@@ -12,12 +14,12 @@ def convert_to_cpp_array(arithmetic_table_file, output_cpp_file):
     current_table = None
     for line in lines:
         if "Multiplication Table" in line:
-            current_table = "MultiplicationTable"
+            current_table = f"Gf{degree}MultiplicationTable"
             cpp_arrays[current_table] = []
             logging.info("Found Multiplication Table")
             continue
         if "Division Table" in line:
-            current_table = "DivisionTable"
+            current_table = f"Gf{degree}DivisionTable"
             cpp_arrays[current_table] = []
             logging.info("Found Division Table")
             continue
@@ -88,7 +90,7 @@ if __name__ == '__main__':
     logging.debug("Arithmetic Table for multiplication\n%s",
                   multiplication_table)
     division_table = GF.arithmetic_table("/")
-    logging.debug("Arithmetic Table for division\n%s", division_table)
+    logging.info("Arithmetic Table for division\n%s", division_table)
     try:
         with open(parser.parse_args().output, 'w', encoding='utf-8') as stream:
             stream.write("Multiplication Table\n")
@@ -98,4 +100,4 @@ if __name__ == '__main__':
     except FileNotFoundError:
         logging.error("File not found: %s", parser.parse_args().output)
     convert_to_cpp_array(parser.parse_args().output,
-                         parser.parse_args().output_cpp)
+                         parser.parse_args().output_cpp, degree)

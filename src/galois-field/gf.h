@@ -25,7 +25,7 @@ class GaloisField {
   uint8_t (*add)(uint8_t, uint8_t) = nullptr;
   uint8_t (*sub)(uint8_t, uint8_t) = nullptr;
   uint8_t (*inv)(uint8_t) = nullptr;
-  GfImplType gf_type = GfImplType::GF_LUT;
+  GfImplType type = GfImplType::GF_LUT;
 };
 
 bool InitGaloisField(GaloisField& gf, const GfImplType& type);

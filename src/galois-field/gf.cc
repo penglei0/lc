@@ -74,5 +74,6 @@ bool InitGaloisField(GaloisField& gf, const GfImplType& type) {
     default:
       return false;
   }
+  gf.type = type;
   return true;
 }
